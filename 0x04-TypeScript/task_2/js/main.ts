@@ -52,10 +52,38 @@ function createEmployee(salary: number | string): Director | Teacher {
   return new Director();
 }
 
-// 6. Example usage
-console.log(createEmployee(200));    // Teacher {}
-console.log(createEmployee(1000));   // Director {}
-console.log(createEmployee("$500")); // Director {}
+// 6. isDirector type predicate
+function isDirector(employee: Director | Teacher): employee is Director {
+  return employee instanceof Director;
+}
+
+// 7. executeWork function
+function executeWork(employee: Director | Teacher): string {
+  if (isDirector(employee)) {
+    return employee.workDirectorTasks();
+  }
+  return employee.workTeacherTasks();
+}
+
+// 8. String literal type Subjects
+type Subjects = "Math" | "History";
+
+// 9. teachClass function
+function teachClass(todayClass: Subjects): string {
+  if (todayClass === "Math") {
+    return "Teaching Math";
+  }
+  return "Teaching History";
+}
+
+// 🔎 Example usage
+console.log(executeWork(createEmployee(200)));    // Getting to work
+console.log(executeWork(createEmployee(1000)));   // Getting to director tasks
+console.log(teachClass("Math"));                  // Teaching Math
+console.log(teachClass("History"));               // Teaching History
+
+
+
 
 
 
